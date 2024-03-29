@@ -8,7 +8,6 @@ import (
 )
 
 func TestMatrixAdd(t *testing.T) {
-
 	t.Run("Matrices of mismatching dimensions should error on addition", func(t *testing.T) {
 
 		m := matrix.Mat{
@@ -56,5 +55,55 @@ func TestMatrixAdd(t *testing.T) {
 			m,
 		)
 	})
+}
 
+func TestMatrixMul(t *testing.T) {
+	t.Run("Matrices of mismatching dimensions should error on multiplication", func(t *testing.T) {
+
+		m := matrix.Mat{
+			Cells: [][]int{
+				{1, 2},
+				{1, 3},
+			},
+		}
+
+		n := matrix.Mat{
+			Cells: [][]int{
+				{1},
+			},
+		}
+
+		o, err := m.Multiply(n)
+		assert.NotNil(t, err)
+		assert.Nil(t, o.Cells)
+	})
+
+	t.Run("Matrices of mismatching dimensions should error on addition", func(t *testing.T) {
+
+		m := matrix.Mat{
+			Cells: [][]int{
+				{1, 2},
+				{1, 3},
+			},
+		}
+
+		n := matrix.Mat{
+			Cells: [][]int{
+				{1, 2},
+				{3, 4},
+			},
+		}
+
+		o, err := m.Multiply(n)
+		assert.Nil(t, err)
+		assert.Equal(t,
+			matrix.Mat{
+				Cells: [][]int{
+					{7, 10},
+					{10, 14},
+				},
+			},
+			o,
+		)
+	})
 }
